@@ -13,6 +13,7 @@
  *	Tado Thermostat
  *
  * 	Author: Stuart Buchanan, Based on original work by Ian M with thanks. also source for icons was from @tonesto7's excellent Nest Manager.
+ *	Date: 2016-12-19 v1.8 Changed Icon Location to New Tado Repository
  * 	Date: 2016-12-18 v1.7 added missing functions to support Set point changes
  * 	Date: 2016-11-28 v1.6 Moved all data collection functions into Tado (Connect) SmartApp, huge changes to device handler, existing devices and handler will need to be uninstalled before installing this version
  *	Date: 2016-07-13 v1.5 Quick dirty workaround to control zones with a single account.
@@ -58,7 +59,7 @@ metadata {
 tiles(scale: 2){
       	multiAttributeTile(name: "thermostat", type:"thermostat", width:6, height:4) {
 			tileAttribute("device.temperature", key:"PRIMARY_CONTROL", canChangeIcon: true, canChangeBackground: true){
-            	attributeState "default", label:'${currentValue}°', backgroundColor:"#fab907", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado.Hot.Water.src/Images/tap_icon.png"
+            	attributeState "default", label:'${currentValue}°', backgroundColor:"#fab907", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-hot-water-control.src/Images/tap_icon.png"
             }
 			tileAttribute("device.temperature", key: "VALUE_CONTROL") {
     			attributeState("VALUE_UP", action: "temperatureUp")
@@ -86,38 +87,38 @@ tiles(scale: 2){
 			state("SLEEP", label:'${name}', backgroundColor:"#0164a8", icon:"st.Bedroom.bedroom2")
             state("HOME", label:'${name}', backgroundColor:"#fab907", icon:"st.Home.home2")
             state("AWAY", label:'${name}', backgroundColor:"#62aa12", icon:"st.Outdoor.outdoor18")
-            state("OFF", label:'', backgroundColor:"#ffffff", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado.Hot.Water.src/Images/hvac_off.png", defaultState: true)
+            state("OFF", label:'', backgroundColor:"#ffffff", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-hot-water-control.src/Images/hvac_off.png", defaultState: true)
             state("MANUAL", label:'${name}', backgroundColor:"#804000", icon:"st.Weather.weather1")
 		}
 
 		standardTile("thermostatMode", "device.thermostatMode", width: 2, height: 2, canChangeIcon: true, canChangeBackground: true) {
-        	state("heat", label:'HEAT', backgroundColor:"#ea2a2a", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado.Hot.Water.src/Images/heat_mode_icon.png")
-            state("off", label:'', backgroundColor:"#ffffff", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado.Hot.Water.src/Images/hvac_off.png", defaultState: true)
+        	state("heat", label:'HEAT', backgroundColor:"#ea2a2a", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-hot-water-control.src/Images/heat_mode_icon.png")
+            state("off", label:'', backgroundColor:"#ffffff", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-hot-water-control.src/Images/hvac_off.png", defaultState: true)
 		}
 
         standardTile("refresh", "device.switch", width: 2, height: 1, decoration: "flat") {
 			state "default", label:"", action:"refresh.refresh", icon:"st.secondary.refresh"
 		}
         standardTile("Off", "device.thermostat", width: 2, height: 1, decoration: "flat") {
-			state "default", label:"", action:"thermostat.off", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado.Hot.Water.src/Images/hvac_off.png"
+			state "default", label:"", action:"thermostat.off", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-hot-water-control.src/Images/hvac_off.png"
 		}
 		standardTile("emergencyHeat", "device.thermostat", width: 2, height: 1, decoration: "flat") {
-			state "default", label:"", action:"thermostat.emergencyHeat", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado.Hot.Water.src/Images/emergencyHeat.png"
+			state "default", label:"", action:"thermostat.emergencyHeat", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-hot-water-control.src/Images/emergencyHeat.png"
 		}
 		valueTile("outsidetemperature", "device.outsidetemperature", width: 2, height: 1, decoration: "flat") {
 			state "outsidetemperature", label: 'Outside Temp\r\n${currentValue}°'
 		}
 		standardTile("heat", "device.thermostat", width: 2, height: 1, decoration: "flat") {
-			state "default", label:"", action:"thermostat.heat", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado.Hot.Water.src/Images/hvac_heat.png"
+			state "default", label:"", action:"thermostat.heat", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-hot-water-control.src/Images/hvac_heat.png"
 		}
 		standardTile("heatingSetpointUp", "device.heatingSetpoint", width: 1, height: 1, canChangeIcon: false, decoration: "flat") {
-            state "heatingSetpointUp", label:'', action:"heatingSetpointUp", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado.Hot.Water.src/Images/heat_arrow_up.png"
+            state "heatingSetpointUp", label:'', action:"heatingSetpointUp", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-hot-water-control.src/Images/heat_arrow_up.png"
         }
         standardTile("heatingSetpointDown", "device.heatingSetpoint", width: 1, height: 1, canChangeIcon: false, decoration: "flat") {
-            state "heatingSetpointDown", label:'', action:"heatingSetpointDown", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado.Hot.Water.src/Images/heat_arrow_down.png"
+            state "heatingSetpointDown", label:'', action:"heatingSetpointDown", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-hot-water-control.src/Images/heat_arrow_down.png"
         }
 		standardTile("endManualControl", "device.thermostat", width: 2, height: 1, canChangeIcon: false, canChangeBackground: true, decoration: "flat") {
-            state("default", label:'', action:"endManualControl", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado.Hot.Water.src/Images/endManual.png")
+            state("default", label:'', action:"endManualControl", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-hot-water-control.src/Images/endManual.png")
 		}
 		main "thermostat"
 		details (["thermostat","thermostatMode","outsidetemperature","heatingSetpoint","refresh","heatingSetpointUp","heatingSetpointDown","tadoMode","emergencyHeat","heat","Off","endManualControl"])

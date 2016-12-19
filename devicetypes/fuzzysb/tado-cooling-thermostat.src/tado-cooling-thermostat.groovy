@@ -13,6 +13,7 @@
  *	Tado AC Thermostat
  *
  *	Author: Stuart Buchanan, Based on original work by Ian M with thanks. also source for icons was from @tonesto7's excellent Nest Manager.
+ *  Date: 2016-12-19 v3.1 Changed Icon Location to New Tado Repository
  *	Date: 2016-11-28 v3.0 Moved all data collection functions into Tado (Connect) SmartApp, huge changes to device handler, existing devices and handler will need to be uninstalled before installing this version
  *	Date: 2016-07-13 v2.9 Quick dirty workaround to control zones with a single account.
  *	Date: 2016-05-07 v2.8 Corrected issue with Fan Speed commands not working.
@@ -135,13 +136,13 @@ metadata {
     }
 
     standardTile("thermostatMode", "device.thermostatMode", width: 2, height: 2, canChangeIcon: true, canChangeBackground: true) {
-      state("heat", label:'HEAT', backgroundColor:"#ea2a2a", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/heat_mode_icon.png")
-      state("emergency heat", label:'HEAT', backgroundColor:"#ea2a2a", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/heat_mode_icon.png")
-      state("cool", label:'COOL', backgroundColor:"#089afb", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/cool_mode_icon.png")
-      state("dry", label:'DRY', icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/dry_mode_icon.png")
-      state("fan", label:'FAN', backgroundColor:"#ffffff", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/fan_mode_icononly.png")
-      state("auto", label:'AUTO', icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/auto_mode_icon.png")
-      state("off", label:'', backgroundColor:"#ffffff", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/hvac_off.png", defaultState: true)
+      state("heat", label:'HEAT', backgroundColor:"#ea2a2a", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/heat_mode_icon.png")
+      state("emergency heat", label:'HEAT', backgroundColor:"#ea2a2a", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/heat_mode_icon.png")
+      state("cool", label:'COOL', backgroundColor:"#089afb", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/cool_mode_icon.png")
+      state("dry", label:'DRY', icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/dry_mode_icon.png")
+      state("fan", label:'FAN', backgroundColor:"#ffffff", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/fan_mode_icononly.png")
+      state("auto", label:'AUTO', icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/auto_mode_icon.png")
+      state("off", label:'', backgroundColor:"#ffffff", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/hvac_off.png", defaultState: true)
 		}
 
 		valueTile("thermostatSetpoint", "device.thermostatSetpoint", width: 2, height: 1, decoration: "flat") {
@@ -161,63 +162,63 @@ metadata {
 		}
 
 		standardTile("tadoFanSpeed", "device.tadoFanSpeed", width: 2, height: 2, canChangeIcon: true, canChangeBackground: true, decoration: "flat") {
-      state("OFF", label:'', icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/fan_off_icon.png", defaultState: true)
-      state("AUTO", label:'', icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/fan_auto_icon.png")
-      state("HIGH", label:'', icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/fan_high_icon.png")
-      state("MIDDLE", label:'', icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/fan_med_icon.png")
-      state("LOW", label:'', icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/fan_low_icon.png")
+      state("OFF", label:'', icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/fan_off_icon.png", defaultState: true)
+      state("AUTO", label:'', icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/fan_auto_icon.png")
+      state("HIGH", label:'', icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/fan_high_icon.png")
+      state("MIDDLE", label:'', icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/fan_med_icon.png")
+      state("LOW", label:'', icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/fan_low_icon.png")
 		}
 
 		standardTile("setAuto", "device.thermostat", width: 2, height: 1, decoration: "flat") {
-			state "default", label:"", action:"thermostat.auto", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/hvac_auto.png"
+			state "default", label:"", action:"thermostat.auto", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/hvac_auto.png"
 		}
     standardTile("setDry", "device.thermostat", width: 2, height: 1, decoration: "flat") {
-			state "default", label:"", action:"dry", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/hvac_dry.png"
+			state "default", label:"", action:"dry", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/hvac_dry.png"
 		}
     standardTile("setOn", "device.thermostat", width: 2, height: 1, decoration: "flat") {
-			state "default", label:"", action:"on", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/hvac_on.png"
+			state "default", label:"", action:"on", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/hvac_on.png"
 		}
     standardTile("setOff", "device.thermostat", width: 2, height: 1, decoration: "flat") {
-			state "default", label:"", action:"thermostat.off", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/hvac_off.png"
+			state "default", label:"", action:"thermostat.off", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/hvac_off.png"
 		}
     standardTile("cool", "device.thermostat", width: 2, height: 1, decoration: "flat") {
-			state "default", label:"", action:"thermostat.cool", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/hvac_cool.png"
+			state "default", label:"", action:"thermostat.cool", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/hvac_cool.png"
 		}
     standardTile("heat", "device.thermostat", width: 2, height: 1, decoration: "flat") {
-			state "default", label:"", action:"thermostat.heat", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/hvac_heat.png"
+			state "default", label:"", action:"thermostat.heat", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/hvac_heat.png"
 		}
     standardTile("emergencyHeat", "device.thermostat", width: 2, height: 1, decoration: "flat") {
-			state "default", label:"", action:"thermostat.emergencyHeat", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/emergencyHeat.png"
+			state "default", label:"", action:"thermostat.emergencyHeat", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/emergencyHeat.png"
 		}
     standardTile("fan", "device.thermostat", width: 2, height: 1, decoration: "flat") {
-			state "default", label:"", action:"thermostat.fan", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/fan_mode_icon.png"
+			state "default", label:"", action:"thermostat.fan", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/fan_mode_icon.png"
 		}
     standardTile("coolingSetpointUp", "device.coolingSetpoint", canChangeIcon: false, decoration: "flat") {
-      state "coolingSetpointUp", label:'  ', action:"coolingSetpointUp", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/cool_arrow_up.png"
+      state "coolingSetpointUp", label:'  ', action:"coolingSetpointUp", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/cool_arrow_up.png"
     }
 		standardTile("coolingSetpointDown", "device.coolingSetpoint", canChangeIcon: false, decoration: "flat") {
-      state "coolingSetpointDown", label:'  ', action:"coolingSetpointDown", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/cool_arrow_down.png"
+      state "coolingSetpointDown", label:'  ', action:"coolingSetpointDown", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/cool_arrow_down.png"
     }
 		standardTile("heatingSetpointUp", "device.heatingSetpoint", canChangeIcon: false, decoration: "flat") {
-      state "heatingSetpointUp", label:'  ', action:"heatingSetpointUp", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/heat_arrow_up.png"
+      state "heatingSetpointUp", label:'  ', action:"heatingSetpointUp", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/heat_arrow_up.png"
     }
     standardTile("heatingSetpointDown", "device.heatingSetpoint", canChangeIcon: false, decoration: "flat") {
-      state "heatingSetpointDown", label:'  ', action:"heatingSetpointDown", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/heat_arrow_down.png"
+      state "heatingSetpointDown", label:'  ', action:"heatingSetpointDown", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/heat_arrow_down.png"
     }
 		standardTile("cmdFanSpeedAuto", "device.thermostat", width: 2, height: 1, canChangeIcon: false, canChangeBackground: true, decoration: "flat") {
-      state("default", label:'', action:"cmdFanSpeedAuto",  icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/fan_auto_icon.png")
+      state("default", label:'', action:"cmdFanSpeedAuto",  icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/fan_auto_icon.png")
     }
     standardTile("cmdFanSpeedHigh", "device.thermostat", width: 2, height: 1, canChangeIcon: false, canChangeBackground: true, decoration: "flat") {
-      state("default", label:'', action:"cmdFanSpeedHigh",  icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/fan_high_icon.png")
+      state("default", label:'', action:"cmdFanSpeedHigh",  icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/fan_high_icon.png")
     }
     standardTile("cmdFanSpeedMid", "device.thermostat", width: 2, height: 1, canChangeIcon: false, canChangeBackground: true, decoration: "flat") {
-      state("default", label:'', action:"cmdFanSpeedMid",  icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/fan_med_icon.png")
+      state("default", label:'', action:"cmdFanSpeedMid",  icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/fan_med_icon.png")
     }
     standardTile("cmdFanSpeedLow", "device.thermostat", width: 2, height: 1, canChangeIcon: false, canChangeBackground: true, decoration: "flat") {
-      state("default", label:'', action:"cmdFanSpeedLow",  icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/fan_low_icon.png")
+      state("default", label:'', action:"cmdFanSpeedLow",  icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/fan_low_icon.png")
     }
 		standardTile("endManualControl", "device.thermostat", width: 2, height: 1, canChangeIcon: false, canChangeBackground: true, decoration: "flat") {
-      state("default", label:'', action:"endManualControl", icon:"https://raw.githubusercontent.com/fuzzysb/SmartThings/master/DeviceTypes/fuzzysb/tado-Cooling-AC.src/Images/endManual.png")
+      state("default", label:'', action:"endManualControl", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/endManual.png")
 		}
 
 		main(["thermostat"])
@@ -358,11 +359,11 @@ def getCapabilityMinHeatTemp() {
 }
 
 def updated(){
-	refresh()
+	getInitialDeviceinfo()
 }
 
 def installed(){
-  refresh()
+	getInitialDeviceinfo()
 }
 
 def poll() {
