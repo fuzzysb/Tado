@@ -26,6 +26,27 @@ e.g. replace https://graph.api.smartthings.com/ide/apps by https://graph-na02-us
 
 INSTALLATION STEPS
 
+For those with GitHub integration you can add my repository
+Namespace:	fuzzysb
+Repository:	Tado
+Branch:	master
+
+You need to update from Repo the Tado Connect Smart app and the three Device Types.
+
+then select your SmartApp and then:
+
+a) click the App Settings Button at the top right corner (in the code window)
+
+b) click the OAuth link and then click on the Enable OAuth in Smart App Button
+
+c) click the Update Button at the bottom left
+
+d) Go back to the code window, and hit the "publish/for me" button at the top right corner
+
+All Complete.
+
+For those without Github integration please do the following steps
+
 /*********************************************************************************************
 
 1) Create new device Handlers
