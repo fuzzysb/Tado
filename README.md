@@ -38,6 +38,7 @@ b) Hit the "+New Device Handler" at the top right corner
 
 c) Hit the "From Code" tab on the left corner
 
+d) Copy and paste the code from https://github.com/fuzzysb/Tado/blob/master/devicetypes/fuzzysb/tado-heating-thermostat.src/tado-heating-thermostat.groovy
 
 e) Hit the create button at the bottom
 
@@ -45,7 +46,9 @@ f) Hit the "publish/for me" button at the top right corner (in the code window)
 
 Complete steps a - e again for each of the following device Types
 
+https://github.com/fuzzysb/Tado/blob/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/tado-cooling-thermostat.groovy
 
+https://github.com/fuzzysb/Tado/blob/master/devicetypes/fuzzysb/tado-hot-water-control.src/tado-hot-water-control.groovy
 
 
 /*********************************************************************************************
@@ -60,6 +63,7 @@ b) Hit the "+New SmartApp" at the top right corner
 
 c) Hit the "From Code" tab on the left corner
 
+d) Copy and paste the code from https://github.com/fuzzysb/Tado/blob/master/smartapps/fuzzysb/tado-connect.src/tado-connect.groovy
 
 e) Hit the create button at the bottom
 
