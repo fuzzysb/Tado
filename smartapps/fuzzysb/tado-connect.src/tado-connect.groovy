@@ -1135,7 +1135,7 @@ def endManualControl(childDevice){
 def cmdFanSpeedAuto(childDevice){
   def supportedfanspeed
   def terminationmode = settings.manualmode
-  def item = (childDevice.device.dni).tokenize('|')
+  def item = (childDevice.device.deviceNetworkId).tokenize('|')
   def deviceId = item[0]
   def deviceType = item[1]
   def deviceToken = item[2]
@@ -1235,7 +1235,7 @@ def cmdFanSpeedLow(childDevice){
 
 def setCoolingTempCommand(childDevice,targetTemperature){
   def terminationmode = settings.manualmode
-  def item = (childDevice.device.dni).tokenize('|')
+  def item = (childDevice.device.deviceNetworkId).tokenize('|')
   def deviceId = item[0]
   def deviceType = item[1]
   def deviceToken = item[2]
@@ -1352,7 +1352,7 @@ def onCommand(childDevice){
 def coolCommand(childDevice){
 	log.debug "Executing 'sendCommand.coolCommand'"
     def terminationmode = settings.manualmode
-    def item = (childDevice.device.dni).tokenize('|')
+    def item = (childDevice.device.deviceNetworkId).tokenize('|')
     def deviceId = item[0]
     def deviceType = item[1]
     def deviceToken = item[2]
