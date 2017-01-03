@@ -11,7 +11,7 @@
  *  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
  *  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
  *  for the specific language governing permissions and limitations under the License.
- * 03/01/2017 v1.3 Corrected Cooling Commands and Set Points issue with incorrect DNI statement with thanks to Richard Gregg
+ *
  * 03/12/2016 v1.2 Corrected Values for Heating and Hot Water set Points
  * 03/12/2016 v1.1 Updated to Support Multiple Hubs, and fixed bug in device discovery and creation, however all device types need updated also.
  * 26/11/2016 V1.0 initial release
