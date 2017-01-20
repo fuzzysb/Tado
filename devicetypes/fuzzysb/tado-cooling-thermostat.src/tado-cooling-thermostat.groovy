@@ -62,6 +62,7 @@ metadata {
 
     attribute "tadoMode", "string"
     attribute "tadoFanSpeed", "string"
+    
     command "temperatureUp"
     command "temperatureDown"
     command "heatingSetpointUp"
@@ -74,7 +75,7 @@ metadata {
     command "cmdFanSpeedLow"
     command "dry"
     command "on"
-		command "fan"
+	command "fan"
     command "endManualControl"
     command "emergencyHeat"
 	}
@@ -191,7 +192,7 @@ metadata {
 			state "default", label:"", action:"thermostat.emergencyHeat", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/emergencyHeat.png"
 		}
     standardTile("fan", "device.thermostat", width: 2, height: 1, decoration: "flat") {
-			state "default", label:"", action:"thermostat.fan", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/fan_mode_icon.png"
+			state "default", label:"", action:"thermostat.fanOn", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/fan_mode_icon.png"
 		}
     standardTile("coolingSetpointUp", "device.coolingSetpoint", canChangeIcon: false, decoration: "flat") {
       state "coolingSetpointUp", label:'  ', action:"coolingSetpointUp", icon:"https://raw.githubusercontent.com/fuzzysb/Tado/master/devicetypes/fuzzysb/tado-cooling-thermostat.src/Images/cool_arrow_up.png"
@@ -396,7 +397,7 @@ def on() {
 def off() {
 	log.debug "Executing 'off'"
 	parent.offCommand(this)
-  parent.statusCommand(this)
+    parent.statusCommand(this)
 }
 
 def getInitialDeviceinfo(){
@@ -593,8 +594,8 @@ def cmdFanSpeedHigh(){
 	parent.cmdFanSpeedHigh(this)
 }
 
-def cmdFanSpeedMed(){
-	parent.cmdFanSpeedMed(this)
+def cmdFanSpeedMid(){
+	parent.cmdFanSpeedMid(this)
 }
 
 def cmdFanSpeedLow(){
