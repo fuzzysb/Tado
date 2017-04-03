@@ -71,6 +71,8 @@ https://github.com/fuzzysb/Tado/blob/master/devicetypes/fuzzysb/tado-cooling-the
 
 https://github.com/fuzzysb/Tado/blob/master/devicetypes/fuzzysb/tado-hot-water-control.src/tado-hot-water-control.groovy
 
+https://github.com/fuzzysb/Tado/blob/master/devicetypes/fuzzysb/tado-user-presence.src/tado-user-presence.groovy
+
 
 /*********************************************************************************************
 
