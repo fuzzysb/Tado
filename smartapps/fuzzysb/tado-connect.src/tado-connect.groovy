@@ -12,6 +12,7 @@
  *  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
  *  for the specific language governing permissions and limitations under the License.
  *
+ * 06/04/2017 v1.5 scheduled refresh of tado user status every minute (Thanks to @sipuncher for pointing out my mistake)
  * 03/04/2017 v1.4 Added ability to have your Tado Users created as Smarthings Virtual Presence Sensors for use in routines etc..
  * 03/01/2017 v1.3 Corrected Cooling Commands and Set Points issue with incorrect DNI statement with thanks to Richard Gregg
  * 03/12/2016 v1.2 Corrected Values for Heating and Hot Water set Points
@@ -347,6 +348,7 @@ def initialize() {
 	
 	// Schedule it to run every 5 minutes
 	runEvery5Minutes("poll")
+    runEvery1Minute("userPoll")
 }
 
 def getInititialDeviceInfo(){
@@ -398,6 +400,24 @@ def poll() {
   }
 }
 
+def userPoll() {
+	log.debug "In UserPoll"
+    getUserList();
+    if(settings.users) {
+    	settings.users.each { user ->
+    		log.debug("Devices Inspected ${user.inspect()}")
+			def item = user.tokenize('|')
+        	def userId = item[0]
+        	def userName = item[1]
+        	def existingUsers = children.find{ d -> d.deviceNetworkId.contains(userId + "|" + userName) }
+        	log.debug("existingUsers Inspected ${existingUsers.inspect()}")
+    		if(existingUsers) {
+          		existingUsers.poll()
+        	}
+     	}
+   }
+}
+        
 def createChildDevice(deviceFile, dni, name, label) {
 	log.debug "In createChildDevice"
     try{
@@ -446,7 +466,7 @@ private sendCommand(method,childDevice,args = []) {
                     query: [username:settings.username, password:settings.password]
                     ],
 	'userStatus': [
-             uri: apiUrl(),
+             		uri: apiUrl(),
                     path: "/api/v2/homes/" + state.homeId + "/mobileDevices",
                     requestContentType: "application/json",
                     query: [username:settings.username, password:settings.password]
@@ -1712,9 +1732,6 @@ def statusCommand(childDevice){
 }
 
 def userStatusCommand(childDevice){
-  def item = (childDevice.device.deviceNetworkId).tokenize('|')
-  def userId = item[0]
-  def userName = item[1]
 	log.debug "Executing 'sendCommand.statusCommand'"
-	sendCommand("userStatus",childDevice,[deviceId])
+	sendCommand("userStatus",childDevice,[])
 }
