@@ -12,6 +12,7 @@
  *  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
  *  for the specific language governing permissions and limitations under the License.
  *
+ * 17/04/2017 v1.7 General Bugfixes around Tado user presence with thanks to @sipuncher
  * 14/04/2017 v1.6 fixed defects in user presence device polling
  * 06/04/2017 v1.5 scheduled refresh of tado user status every minute (Thanks to @sipuncher for pointing out my mistake)
  * 03/04/2017 v1.4 Added ability to have your Tado Users created as Smarthings Virtual Presence Sensors for use in routines etc..
