@@ -12,6 +12,7 @@
  *  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
  *  for the specific language governing permissions and limitations under the License.
  *
+ * 14/04/2017 v1.6 fixed defects in user presence device polling
  * 06/04/2017 v1.5 scheduled refresh of tado user status every minute (Thanks to @sipuncher for pointing out my mistake)
  * 03/04/2017 v1.4 Added ability to have your Tado Users created as Smarthings Virtual Presence Sensors for use in routines etc..
  * 03/01/2017 v1.3 Corrected Cooling Commands and Set Points issue with incorrect DNI statement with thanks to Richard Gregg
@@ -348,7 +349,7 @@ def initialize() {
 	
 	// Schedule it to run every 5 minutes
 	runEvery5Minutes("poll")
-    runEvery1Minute("userPoll")
+    runEvery1Minutes("userPoll")
 }
 
 def getInititialDeviceInfo(){
@@ -396,13 +397,13 @@ def poll() {
       if(existingDevices) {
         existingDevices.poll()
       }
-	   }
+	}
   }
 }
 
 def userPoll() {
 	log.debug "In UserPoll"
-    getUserList();
+    def children = getChildDevices();
     if(settings.users) {
     	settings.users.each { user ->
     		log.debug("Devices Inspected ${user.inspect()}")
@@ -579,7 +580,7 @@ private parseUserResponse(resp,childDevice) {
       def restUsers = resp.data
       log.debug("Executing parseUserResponse.successTrue")
       log.debug("UserId is ${userId} and userName is ${userName}")
-      restUsers.each { TadoUser -> 
+      for (TadoUser in restUsers) {
       	log.debug("TadoUserId is ${TadoUser.id}")
       	if ((TadoUser.id).toString() == (userId).toString())
         {
@@ -600,7 +601,7 @@ private parseUserResponse(resp,childDevice) {
             
         }
       }
-    }else if(resp.status == 201){
+    } else if(resp.status == 201){
         log.debug("Something was created/updated")
     }
 }
@@ -1732,6 +1733,9 @@ def statusCommand(childDevice){
 }
 
 def userStatusCommand(childDevice){
-	log.debug "Executing 'sendCommand.statusCommand'"
-	sendCommand("userStatus",childDevice,[])
+	try{
+		log.debug "Executing 'sendCommand.userStatusCommand'"
+		sendCommand("userStatus",childDevice,[])
+    	} catch(Exception e) { log.debug("Failed in setting userStatusCommand: " + e)
+    }
 }
