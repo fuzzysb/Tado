@@ -13,6 +13,7 @@
  *	Tado Thermostat
  *
  * 	Author: Stuart Buchanan, Based on original work by Ian M with thanks. also source for icons was from @tonesto7's excellent Nest Manager.
+ *	Date: 2017-05-16 v1.9 Fixed Parent,child on/off commands
  *	Date: 2016-12-19 v1.8 Changed Icon Location to New Tado Repository
  * 	Date: 2016-12-18 v1.7 added missing functions to support Set point changes
  * 	Date: 2016-11-28 v1.6 Moved all data collection functions into Tado (Connect) SmartApp, huge changes to device handler, existing devices and handler will need to be uninstalled before installing this version
@@ -210,26 +211,26 @@ def refresh() {
 def auto() {
 	log.debug "Executing 'auto'"
 	parent.autoCommand(this)
-  parent.statusCommand(this)
+    parent.statusCommand(this)
 }
 
 def on() {
 	log.debug "Executing 'on'"
-	onCommand()
-    statusCommand()
+	parent.onCommand(this)
+    parent.statusCommand(this)
 }
 
 def off() {
 	log.debug "Executing 'off'"
-	offCommand()
-    statusCommand()
+	parent.offCommand(this)
+    parent.statusCommand(this)
 }
 
 def setHeatingSetpoint(targetTemperature) {
 	log.debug "Executing 'setHeatingSetpoint'"
     log.debug "Target Temperature ${targetTemperature}"
-    setHeatingTempCommand(targetTemperature)
-	statusCommand()
+    parent.setHeatingTempCommand(this,targetTemperature)
+	parent.statusCommand(this)
 }
 
 def temperatureUp(){
@@ -257,7 +258,6 @@ def heatingSetpointUp(){
 			int newSetpoint = (device.currentValue("thermostatSetpoint")).toInteger() + 1
 			log.debug "Setting heatingSetpoint up to: ${newSetpoint}"
 			setHeatingSetpoint(newSetpoint)
-			statusCommand()
 		}
 	} else {
 		log.debug "Hot Water Temperature Capability Not Supported"
@@ -273,7 +273,6 @@ def heatingSetpointDown(){
 			int newSetpoint = (device.currentValue("thermostatSetpoint")).toInteger() - 1
 			log.debug "Setting heatingSetpoint down to: ${newSetpoint}"
 			setHeatingSetpoint(newSetpoint)
-			statusCommand()
 		}
 	} else {
 		log.debug "Hot Water Temperature Capability Not Supported"
@@ -310,5 +309,5 @@ def emergencyHeat(){
 }
 
 def endManualControl(){
-	parent.endManualControl(this)
+  parent.endManualControl(this)
 }

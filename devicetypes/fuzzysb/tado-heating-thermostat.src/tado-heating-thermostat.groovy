@@ -226,13 +226,13 @@ def auto() {
 def on() {
 	log.debug "Executing 'on'"
 	parent.onCommand(this)
-  parent.statusCommand(this)
+    parent.statusCommand(this)
 }
 
 def off() {
 	log.debug "Executing 'off'"
 	parent.offCommand(this)
-  parent.statusCommand(this)
+    parent.statusCommand(this)
 }
 
 def setHeatingSetpoint(targetTemperature) {

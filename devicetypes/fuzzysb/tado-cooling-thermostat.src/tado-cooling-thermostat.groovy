@@ -385,13 +385,13 @@ def getWeather(){
 def auto() {
 	log.debug "Executing 'auto'"
 	parent.autoCommand(this)
-  parent.statusCommand(this)
+    parent.statusCommand(this)
 }
 
 def on() {
 	log.debug "Executing 'on'"
 	parent.onCommand(this)
-  parent.statusCommand(this)
+    parent.statusCommand(this)
 }
 
 def off() {
