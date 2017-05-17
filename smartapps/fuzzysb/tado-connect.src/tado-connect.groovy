@@ -1524,7 +1524,13 @@ def coolCommand(childDevice){
     } else {
     	initialsetpointtemp = childDevice.device.currentValue("thermostatSetpoint")
     }
-    def jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:"COOL", power:"ON", temperature:[celsius:initialsetpointtemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+    def jsonbody
+    if (state.tempunit == "C") {
+    jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:"COOL", power:"ON", temperature:[celsius:initialsetpointtemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+    }
+    else if (state.tempunit == "F"){
+    jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:"COOL", power:"ON", temperature:[fahrenheit:initialsetpointtemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+    }
     sendCommand("temperature",childDevice,[deviceId,jsonbody])
 }
 
@@ -1568,7 +1574,13 @@ def heatCommand(childDevice){
       {
         initialsetpointtemp = childDevice.device.currentValue("thermostatSetpoint")
       }
-      def jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:"HEAT", power:"ON", temperature:[celsius:initialsetpointtemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+      def jsonbody
+      if (state.tempunit == "C") {
+      	jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:"HEAT", power:"ON", temperature:[celsius:initialsetpointtemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+      }
+      else if (state.tempunit == "F"){
+    	jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:"HEAT", power:"ON", temperature:[fahrenheit:initialsetpointtemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+      }
       sendCommand("temperature",childDevice,[deviceId,jsonbody])
     }
     if(deviceType == "HEATING")
@@ -1591,7 +1603,13 @@ def heatCommand(childDevice){
         {
           initialsetpointtemp = childDevice.device.currentValue("thermostatSetpoint")
         }
-        def jsonbody = new groovy.json.JsonOutput().toJson([setting:[power:"ON", temperature:[celsius:initialsetpointtemp], type:"HEATING"], termination:[type:terminationmode]])
+        def jsonbody
+        if (state.tempunit == "C") {
+      		jsonbody = new groovy.json.JsonOutput().toJson([setting:[power:"ON", temperature:[celsius:initialsetpointtemp], type:"HEATING"], termination:[type:terminationmode]])
+      	}
+        else if (state.tempunit == "F"){
+        	jsonbody = new groovy.json.JsonOutput().toJson([setting:[power:"ON", temperature:[fahrenheit:initialsetpointtemp], type:"HEATING"], termination:[type:terminationmode]])
+      	}
         sendCommand("temperature",childDevice,[deviceId,jsonbody])
     }
     if(deviceType == "WATER")
@@ -1611,7 +1629,12 @@ def heatCommand(childDevice){
         } else {
           initialsetpointtemp = childDevice.device.currentValue("thermostatSetpoint")
         }
-        jsonbody = new groovy.json.JsonOutput().toJson([setting:[power:"ON", temperature:[celsius:initialsetpointtemp], type:"HOT_WATER"], termination:[type:terminationmode]])
+        if (state.tempunit == "C") {
+      		jsonbody = new groovy.json.JsonOutput().toJson([setting:[power:"ON", temperature:[celsius:initialsetpointtemp], type:"HOT_WATER"], termination:[type:terminationmode]])
+      	}
+        else if (state.tempunit == "F"){
+        	jsonbody = new groovy.json.JsonOutput().toJson([setting:[power:"ON", temperature:[fahrenheit:initialsetpointtemp], type:"HOT_WATER"], termination:[type:terminationmode]])
+      	}
       } else {
         jsonbody = new groovy.json.JsonOutput().toJson([setting:[power:"ON", type:"HOT_WATER"], termination:[type:terminationmode]])
       }
@@ -1660,7 +1683,13 @@ def emergencyHeat(childDevice){
       {
         initialsetpointtemp = childDevice.device.currentValue("thermostatSetpoint")
       }
-      def jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:"HEAT", power:"ON", temperature:[celsius:initialsetpointtemp], type:"AIR_CONDITIONING"], termination:[durationInSeconds:"3600", type:"TIMER"]])
+      def jsonbody
+      if (state.tempunit == "C") {
+      	jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:"HEAT", power:"ON", temperature:[celsius:initialsetpointtemp], type:"AIR_CONDITIONING"], termination:[durationInSeconds:"3600", type:"TIMER"]])
+      }
+      else if (state.tempunit == "F"){
+      	jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:"HEAT", power:"ON", temperature:[fahrenheit:initialsetpointtemp], type:"AIR_CONDITIONING"], termination:[durationInSeconds:"3600", type:"TIMER"]])
+      }
       sendCommand("temperature",childDevice,[deviceId,jsonbody])
       statusCommand(device)
     }
@@ -1688,7 +1717,13 @@ def emergencyHeat(childDevice){
       {
         initialsetpointtemp = childDevice.device.currentValue("thermostatSetpoint")
       }
-      def jsonbody = new groovy.json.JsonOutput().toJson([setting:[power:"ON", temperature:[celsius:initialsetpointtemp], type:"HEATING"], termination:[durationInSeconds:"3600", type:"TIMER"]])
+      def jsonbody
+      if (state.tempunit == "C") {
+      	jsonbody = new groovy.json.JsonOutput().toJson([setting:[power:"ON", temperature:[celsius:initialsetpointtemp], type:"HEATING"], termination:[durationInSeconds:"3600", type:"TIMER"]])
+      }
+      else if (state.tempunit == "F"){
+      	jsonbody = new groovy.json.JsonOutput().toJson([setting:[power:"ON", temperature:[fahrenheit:initialsetpointtemp], type:"HEATING"], termination:[durationInSeconds:"3600", type:"TIMER"]])
+      }
       sendCommand("temperature",childDevice,[deviceId,jsonbody])
       statusCommand(childDevice)
   }
@@ -1714,7 +1749,12 @@ def emergencyHeat(childDevice){
       {
         initialsetpointtemp = childDevice.device.currentValue("thermostatSetpoint")
       }
-      jsonbody = new groovy.json.JsonOutput().toJson([setting:[power:"ON", temperature:[celsius:initialsetpointtemp], type:"HOT_WATER"], termination:[durationInSeconds:"3600", type:"TIMER"]])
+      if (state.tempunit == "C") {
+      	jsonbody = new groovy.json.JsonOutput().toJson([setting:[power:"ON", temperature:[celsius:initialsetpointtemp], type:"HOT_WATER"], termination:[durationInSeconds:"3600", type:"TIMER"]])
+      }
+      else if (state.tempunit == "F"){
+      	jsonbody = new groovy.json.JsonOutput().toJson([setting:[power:"ON", temperature:[fahrenheit:initialsetpointtemp], type:"HOT_WATER"], termination:[durationInSeconds:"3600", type:"TIMER"]])
+      }
     }
     else
     {
