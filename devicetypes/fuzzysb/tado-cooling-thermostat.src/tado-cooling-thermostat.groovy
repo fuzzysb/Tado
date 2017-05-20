@@ -13,6 +13,7 @@
  *	Tado AC Thermostat
  *
  *	Author: Stuart Buchanan, Based on original work by Ian M with thanks. also source for icons was from @tonesto7's excellent Nest Manager.
+ *  Date: 2017-05-20 v3.2 Added support for Air Condiioners which have a mandatory swing field in the heating & cool Commands, thanks again to @Jnick
  *  Date: 2016-12-19 v3.1 Changed Icon Location to New Tado Repository
  *	Date: 2016-11-28 v3.0 Moved all data collection functions into Tado (Connect) SmartApp, huge changes to device handler, existing devices and handler will need to be uninstalled before installing this version
  *	Date: 2016-07-13 v2.9 Quick dirty workaround to control zones with a single account.
@@ -315,10 +316,35 @@ def getCapabilitySupportsHeatAutoFanSpeed() {
   return map
 }
 
+def setCapabilitySupportsCoolSwing(value){
+  state.CoolSwing = value
+  log.debug("set state.CoolSwing to : " + state.CoolSwing)
+}
+
+def getCapabilitySupportsCoolSwing() {
+  def map = null
+  map = [name: "CoolSwing", value: state.CoolSwing]
+  return map
+}
+
+def setCapabilitySupportsHeatSwing(value){
+  state.HeatSwing = value
+  log.debug("set state.CoolSwing to : " + state.HeatSwing)
+}
+
+def getCapabilitySupportsHeatSwing() {
+  def map = null
+  map = [name: "HeatSwing", value: state.HeatSwing]
+  return map
+}
+
+
 def setCapabilityMaxCoolTemp(value){
   state.MaxCoolTemp = value
   log.debug("set state.MaxCoolTemp to : " + state.MaxCoolTemp)
 }
+
+
 
 def getCapabilityMaxCoolTemp() {
   def map = null
