@@ -1316,12 +1316,24 @@ def cmdFanSpeedAuto(childDevice){
 	def curSetTemp = (childDevice.device.currentValue("thermostatSetpoint"))
 	def curMode = ((childDevice.device.currentValue("thermostatMode")).toUpperCase())
 	if (curMode == "COOL" || curMode == "HEAT"){
-		if (state.tempunit == "C") {
-      jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", temperature:[celsius:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
-    }
-    else if(state.tempunit == "F"){
-      jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", temperature:[fahrenheit:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
-    }
+    	if (capabilitySupportsCoolSwing == "true" || capabilitySupportsHeatSwing == "true")
+        {
+    		if (state.tempunit == "C") {
+      			jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", swing:"OFF", temperature:[celsius:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+    		}
+    		else if(state.tempunit == "F"){
+      			jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", swing:"OFF", temperature:[fahrenheit:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+    		}
+        } 
+        else
+        {
+        	if (state.tempunit == "C") {
+      			jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", temperature:[celsius:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+    		}
+    		else if(state.tempunit == "F"){
+      			jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", temperature:[fahrenheit:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+    		}
+        }
 		log.debug "Executing 'sendCommand.fanSpeedAuto' to ${supportedfanspeed}"
     sendCommand("temperature",childDevice,[deviceId,jsonbody])
     statusCommand(childDevice)
@@ -1339,12 +1351,24 @@ def cmdFanSpeedHigh(childDevice){
 	def curSetTemp = (childDevice.device.currentValue("thermostatSetpoint"))
 	def curMode = ((childDevice.device.currentValue("thermostatMode")).toUpperCase())
 	if (curMode == "COOL" || curMode == "HEAT"){
-    if (state.tempunit == "C") {
-      jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", temperature:[celsius:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
-    }
-    else if(state.tempunit == "F"){
-      jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", temperature:[fahrenheit:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
-    }
+    	if (capabilitySupportsCoolSwing == "true" || capabilitySupportsHeatSwing == "true")
+        {
+    		if (state.tempunit == "C") {
+      			jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", swing:"OFF", temperature:[celsius:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+    		}
+    		else if(state.tempunit == "F"){
+      			jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", swing:"OFF", temperature:[fahrenheit:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+    		}
+        } 
+        else
+        {
+        	if (state.tempunit == "C") {
+      			jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", temperature:[celsius:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+    		}
+    		else if(state.tempunit == "F"){
+      			jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", temperature:[fahrenheit:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+    		}
+        }
 		log.debug "Executing 'sendCommand.fanSpeedAuto' to ${supportedfanspeed}"
     sendCommand("temperature",childDevice,[deviceId,jsonbody])
     statusCommand(childDevice)
@@ -1362,12 +1386,24 @@ def cmdFanSpeedMid(childDevice){
 	def curSetTemp = (childDevice.device.currentValue("thermostatSetpoint"))
 	def curMode = ((childDevice.device.currentValue("thermostatMode")).toUpperCase())
 	if (curMode == "COOL" || curMode == "HEAT"){
-    if (state.tempunit == "C") {
-      jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", temperature:[celsius:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
-    }
-    else if(state.tempunit == "F"){
-      jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", temperature:[fahrenheit:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
-    }
+    	if (capabilitySupportsCoolSwing == "true" || capabilitySupportsHeatSwing == "true")
+        {
+    		if (state.tempunit == "C") {
+      			jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", swing:"OFF", temperature:[celsius:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+    		}
+    		else if(state.tempunit == "F"){
+      			jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", swing:"OFF", temperature:[fahrenheit:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+    		}
+        } 
+        else
+        {
+        	if (state.tempunit == "C") {
+      			jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", temperature:[celsius:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+    		}
+    		else if(state.tempunit == "F"){
+      			jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", temperature:[fahrenheit:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+    		}
+        }
 		log.debug "Executing 'sendCommand.fanSpeedMid' to ${supportedfanspeed}"
 		sendCommand("temperature",childDevice,[deviceId,jsonbody])
     statusCommand(childDevice)
@@ -1379,18 +1415,32 @@ def cmdFanSpeedLow(childDevice){
   def deviceId = item[0]
   def deviceType = item[1]
   def deviceToken = item[2]
+  def capabilitySupportsCoolSwing = parseCapabilityData(childDevice.getCapabilitySupportsCoolSwing())
+  def capabilitySupportsHeatSwing = parseCapabilityData(childDevice.getCapabilitySupportsHeatSwing())
   def supportedfanspeed = "LOW"
   def terminationmode = settings.manualmode
   def jsonbody
 	def curSetTemp = (childDevice.device.currentValue("thermostatSetpoint"))
 	def curMode = ((childDevice.device.currentValue("thermostatMode")).toUpperCase())
 	if (curMode == "COOL" || curMode == "HEAT"){
-    if (state.tempunit == "C") {
-      jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", temperature:[celsius:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
-    }
-    else if(state.tempunit == "F"){
-      jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", temperature:[fahrenheit:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
-    }
+    	if (capabilitySupportsCoolSwing == "true" || capabilitySupportsHeatSwing == "true")
+        {
+    		if (state.tempunit == "C") {
+      			jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", swing:"OFF", temperature:[celsius:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+    		}
+    		else if(state.tempunit == "F"){
+      			jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", swing:"OFF", temperature:[fahrenheit:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+    		}
+        } 
+        else
+        {
+        	if (state.tempunit == "C") {
+      			jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", temperature:[celsius:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+    		}
+    		else if(state.tempunit == "F"){
+      			jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:curMode, power:"ON", temperature:[fahrenheit:curSetTemp], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+    		}
+        }
 		log.debug "Executing 'sendCommand.fanSpeedLow' to ${supportedfanspeed}"
 		sendCommand("temperature",childDevice,[deviceId,jsonbody])
     statusCommand(childDevice)
@@ -1405,6 +1455,7 @@ def setCoolingTempCommand(childDevice,targetTemperature){
   def deviceToken = item[2]
   def supportedfanspeed
   def capabilitySupportsCool = parseCapabilityData(childDevice.getCapabilitySupportsCool())
+  def capabilitySupportsCoolSwing = parseCapabilityData(childDevice.getCapabilitySupportsCoolSwing())
   def capabilitysupported = capabilitySupportsCool
   def capabilitySupportsCoolAutoFanSpeed = parseCapabilityData(childDevice.getCapabilitySupportsCoolAutoFanSpeed())
   def fancapabilitysupported = capabilitySupportsCoolAutoFanSpeed
@@ -1414,12 +1465,25 @@ def setCoolingTempCommand(childDevice,targetTemperature){
     } else {
         supportedfanspeed = "HIGH"
     }
- 	if (state.tempunit == "C") {
-    jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:"COOL", power:"ON", temperature:[celsius:targetTemperature], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
-  }
-  else if(state.tempunit == "F"){
-    jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:"COOL", power:"ON", temperature:[fahrenheit:targetTemperature], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
-  }
+    if (capabilitySupportsCoolSwing == "true")
+    {
+ 		if (state.tempunit == "C") {
+    		jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:"COOL", power:"ON", swing:"OFF", temperature:[celsius:targetTemperature], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+  		}
+  		else if(state.tempunit == "F"){
+            jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:"COOL", power:"ON", swing:"OFF", temperature:[fahrenheit:targetTemperature], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+  		}    
+    }
+    else
+    {
+ 		if (state.tempunit == "C") {
+    		jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:"COOL", power:"ON", temperature:[celsius:targetTemperature], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+  		}
+  		else if(state.tempunit == "F"){
+    		jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:"COOL", power:"ON", temperature:[fahrenheit:targetTemperature], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+  		}    
+    }
+
 	log.debug "Executing 'sendCommand.setCoolingTempCommand' to ${targetTemperature} on device ${childDevice.device.name}"
 	sendCommand("temperature",childDevice,[deviceId,jsonbody])
 }
@@ -1434,6 +1498,7 @@ def setHeatingTempCommand(childDevice,targetTemperature){
   {
     def capabilitySupportsHeat = parseCapabilityData(childDevice.getCapabilitySupportsHeat())
     def capabilitysupported = capabilitySupportsHeat
+    def capabilitySupportsHeatSwing = parseCapabilityData(childDevice.getCapabilitySupportsHeatSwing())
     def capabilitySupportsHeatAutoFanSpeed = parseCapabilityData(childDevice.getCapabilitySupportsHeatAutoFanSpeed())
     def fancapabilitysupported = capabilitySupportsHeatAutoFanSpeed
     def supportedfanspeed
@@ -1446,11 +1511,23 @@ def setHeatingTempCommand(childDevice,targetTemperature){
     {
       supportedfanspeed = "HIGH"
     }
-   	if (state.tempunit == "C") {
-      jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:"HEAT", power:"ON", temperature:[celsius:targetTemperature], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+    if (capabilitySupportsHeatSwing == "true")
+    {
+ 		if (state.tempunit == "C") {
+    		jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:"HEAT", power:"ON", swing:"OFF", temperature:[celsius:targetTemperature], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+  		}
+  		else if(state.tempunit == "F"){
+            jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:"HEAT", power:"ON", swing:"OFF", temperature:[fahrenheit:targetTemperature], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+  		}    
     }
-    else if(state.tempunit == "F"){
-      jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:"HEAT", power:"ON", temperature:[fahrenheit:targetTemperature], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+    else
+    {
+ 		if (state.tempunit == "C") {
+    		jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:"HEAT", power:"ON", temperature:[celsius:targetTemperature], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+  		}
+  		else if(state.tempunit == "F"){
+    		jsonbody = new groovy.json.JsonOutput().toJson([setting:[fanSpeed:supportedfanspeed, mode:"HEAT", power:"ON", temperature:[fahrenheit:targetTemperature], type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+  		}    
     }
   	log.debug "Executing 'sendCommand.setHeatingTempCommand' to ${targetTemperature} on device ${childDevice.device.name}"
     sendCommand("temperature",childDevice,[deviceId,jsonbody])
