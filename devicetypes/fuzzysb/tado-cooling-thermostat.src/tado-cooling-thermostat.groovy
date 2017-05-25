@@ -13,6 +13,7 @@
  *	Tado AC Thermostat
  *
  *	Author: Stuart Buchanan, Based on original work by Ian M with thanks. also source for icons was from @tonesto7's excellent Nest Manager.
+ *  Date: 2017-05-25 v3.3 Added support for Air Condiioners which have a mandatory swing field for all Commands and corrected issues with v3.2
  *  Date: 2017-05-20 v3.2 Added support for Air Condiioners which have a mandatory swing field in the heating & cool Commands, thanks again to @Jnick
  *  Date: 2016-12-19 v3.1 Changed Icon Location to New Tado Repository
  *	Date: 2016-11-28 v3.0 Moved all data collection functions into Tado (Connect) SmartApp, huge changes to device handler, existing devices and handler will need to be uninstalled before installing this version
@@ -327,14 +328,47 @@ def getCapabilitySupportsCoolSwing() {
   return map
 }
 
+def setCapabilitySupportsDrySwing(value){
+  state.CoolSwing = value
+  log.debug("set state.DrySwing to : " + state.DrySwing)
+}
+
+def getCapabilitySupportsDrySwing() {
+  def map = null
+  map = [name: "DrySwing", value: state.DrySwing]
+  return map
+}
+
+def setCapabilitySupportsAutoSwing(value){
+  state.CoolSwing = value
+  log.debug("set state.AutoSwing to : " + state.AutoSwing)
+}
+
+def getCapabilitySupportsAutoSwing() {
+  def map = null
+  map = [name: "AutoSwing", value: state.AutoSwing]
+  return map
+}
+
+def setCapabilitySupportsFanSwing(value){
+  state.CoolSwing = value
+  log.debug("set state.FanSwing to : " + state.AutoSwing)
+}
+
+def getCapabilitySupportsFanSwing() {
+  def map = null
+  map = [name: "FanSwing", value: state.AutoSwing]
+  return map
+}
+
 def setCapabilitySupportsHeatSwing(value){
   state.HeatSwing = value
-  log.debug("set state.CoolSwing to : " + state.HeatSwing)
+  log.debug("set state.HeatSwing to : " + state.FanSwing)
 }
 
 def getCapabilitySupportsHeatSwing() {
   def map = null
-  map = [name: "HeatSwing", value: state.HeatSwing]
+  map = [name: "HeatSwing", value: state.FanSwing]
   return map
 }
 
@@ -343,8 +377,6 @@ def setCapabilityMaxCoolTemp(value){
   state.MaxCoolTemp = value
   log.debug("set state.MaxCoolTemp to : " + state.MaxCoolTemp)
 }
-
-
 
 def getCapabilityMaxCoolTemp() {
   def map = null
