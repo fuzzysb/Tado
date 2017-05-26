@@ -13,6 +13,7 @@
  *	Tado AC Thermostat
  *
  *	Author: Stuart Buchanan, Based on original work by Ian M with thanks. also source for icons was from @tonesto7's excellent Nest Manager.
+ *  Date: 2017-05-25 v3.4 Added extra logging for Air Condiioners and corrected some of the get/set functions which had some typo's
  *  Date: 2017-05-25 v3.3 Added support for Air Condiioners which have a mandatory swing field for all Commands and corrected issues with v3.2
  *  Date: 2017-05-20 v3.2 Added support for Air Condiioners which have a mandatory swing field in the heating & cool Commands, thanks again to @Jnick
  *  Date: 2016-12-19 v3.1 Changed Icon Location to New Tado Repository
@@ -279,7 +280,9 @@ def setCapabilitySupportsDry(value){
 }
 
 def getCapabilitySupportsDry() {
+  log.debug("in getCapabilitySupportsDry")
   def map = null
+  log.debug("Supports Capability value returned is ${state.supportsDry}")
   map = [name: "capabilitySupportsDry", value: state.supportsDry]
   return map
 }
@@ -329,7 +332,7 @@ def getCapabilitySupportsCoolSwing() {
 }
 
 def setCapabilitySupportsDrySwing(value){
-  state.CoolSwing = value
+  state.DrySwing = value
   log.debug("set state.DrySwing to : " + state.DrySwing)
 }
 
@@ -340,7 +343,7 @@ def getCapabilitySupportsDrySwing() {
 }
 
 def setCapabilitySupportsAutoSwing(value){
-  state.CoolSwing = value
+  state.AutoSwing = value
   log.debug("set state.AutoSwing to : " + state.AutoSwing)
 }
 
@@ -351,24 +354,24 @@ def getCapabilitySupportsAutoSwing() {
 }
 
 def setCapabilitySupportsFanSwing(value){
-  state.CoolSwing = value
-  log.debug("set state.FanSwing to : " + state.AutoSwing)
+  state.FanSwing = value
+  log.debug("set state.FanSwing to : " + state.FanSwing)
 }
 
 def getCapabilitySupportsFanSwing() {
   def map = null
-  map = [name: "FanSwing", value: state.AutoSwing]
+  map = [name: "FanSwing", value: state.FanSwing]
   return map
 }
 
 def setCapabilitySupportsHeatSwing(value){
   state.HeatSwing = value
-  log.debug("set state.HeatSwing to : " + state.FanSwing)
+  log.debug("set state.HeatSwing to : " + state.HeatSwing)
 }
 
 def getCapabilitySupportsHeatSwing() {
   def map = null
-  map = [name: "HeatSwing", value: state.FanSwing]
+  map = [name: "HeatSwing", value: state.HeatSwing]
   return map
 }
 
@@ -441,9 +444,14 @@ def getWeather(){
 }
 
 def auto() {
-	log.debug "Executing 'auto'"
+  def capabilitysupported = state.supportsAuto
+  if (capabilitysupported == "true"){
+  	log.debug "Executing 'auto'"
 	parent.autoCommand(this)
     parent.statusCommand(this)
+  } else {
+  	log.debug("Sorry Auto Capability not supported by your HVAC Device")
+  }
 }
 
 def on() {
@@ -464,9 +472,14 @@ def getInitialDeviceinfo(){
 }
 
 def dry() {
-	log.debug "Executing 'dry'"
+  def capabilitysupported = state.supportsDry
+  if (capabilitysupported == "true"){
+  	log.debug "Executing 'dry'"
 	parent.dryCommand(this)
-  parent.statusCommand(this)
+    parent.statusCommand(this)
+  } else {
+  	log.debug("Sorry Dry Capability not supported by your HVAC Device")
+  }
 }
 
 def setThermostatMode(requiredMode){
@@ -618,7 +631,7 @@ def fanCirculate(){
 def cool(){
 	def capabilitysupported = state.supportsCool
   if (capabilitysupported == "true"){
-		parent.coolCommand(this)
+    parent.coolCommand(this)
     parent.statusCommand(this)
 	} else {
     	log.debug("Sorry Cool Capability not supported by your HVAC Device")
@@ -626,18 +639,24 @@ def cool(){
 }
 
 def heat(){
-	def capabilitysupported = state.supportsHeat
-	if (capabilitysupported == "true"){
+  def capabilitysupported = state.supportsHeat
+  if (capabilitysupported == "true"){
 	parent.heatCommand(this)
-  parent.statusCommand(this)
+    parent.statusCommand(this)
   } else {
   	log.debug("Sorry Heat Capability not supported by your HVAC Device")
   }
 }
 
 def fan(){
+  def capabilitysupported = state.supportsFan
+  if (capabilitysupported == "true"){
+  	log.debug "Executing 'fan'"
 	parent.fanAuto(this)
-	refresh()
+    parent.statusCommand(this)
+  } else {
+  	log.debug("Sorry Fan Capability not supported by your HVAC Device")
+  }
 }
 
 def emergencyHeat(){
