@@ -12,6 +12,7 @@
  *  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
  *  for the specific language governing permissions and limitations under the License.
  *
+ * 26/05/2017 v2.2 Corrected bug with parseCapability function as this was returning the map instead of the value, this would account for lots of strange behaviour.
  * 25/05/2017 v2.1 Added support for Air Condiioners which have a mandatory swing field for all Commands, corrected prevois bugs in v2.0, thanks again to @Jnick
  * 20/05/2017 v2.0 Added support for Air Condiioners which have a mandatory swing field in the heating & cool Commands, thanks again to @Jnick
  * 17/05/2017 v1.9 Corrected issue with the wrong temp unit being used on some thermostat functions when using Farenheit, many thanks again to @Jnick for getting the logs to help diagnose this.
@@ -967,10 +968,12 @@ private parseCapabilitiesResponse(resp,childDevice) {
           }
           if(resp.data.AUTO.swings || (resp.data.AUTO.swings).toString() == "[:]")
           {
+            log.debug("settingautoswingcapability state true")
          	childDevice?.setCapabilitySupportsAutoSwing("true")
           }
           else
           {
+          	log.debug("settingautoswingcapability state false")
            	childDevice?.setCapabilitySupportsAutoSwing("false")
           }
           if(resp.data.COOL || (resp.data.COOL).toString() == "[:]"){
@@ -979,10 +982,12 @@ private parseCapabilitiesResponse(resp,childDevice) {
               def coolfanmodelist = resp.data.COOL.fanSpeeds
               if(resp.data.COOL.swings || (resp.data.COOL.swings).toString() == "[:]")
               {
+              	log.debug("settingcoolswingcapability state true")
               	childDevice?.setCapabilitySupportsCoolSwing("true")
               }
               else
               {
+                log.debug("settingcoolswingcapability state false")
               	childDevice?.setCapabilitySupportsCoolSwing("false")
               }
               if(coolfanmodelist.find { it == 'AUTO' }){
@@ -1012,10 +1017,12 @@ private parseCapabilitiesResponse(resp,childDevice) {
           }
           if(resp.data.DRY.swings || (resp.data.DRY.swings).toString() == "[:]")
           {
+          	log.debug("settingdryswingcapability state true")
          	childDevice?.setCapabilitySupportsDrySwing("true")
           }
           else
           {
+            log.debug("settingdryswingcapability state false")
            	childDevice?.setCapabilitySupportsDrySwing("false")
           }
           
@@ -1028,11 +1035,13 @@ private parseCapabilitiesResponse(resp,childDevice) {
           }
           if(resp.data.FAN.swings || (resp.data.FAN.swings).toString() == "[:]")
           {
-         	childDevice?.setCapabilitySupportsFANSwing("true")
+            log.debug("settingfanswingcapability state true")
+         	childDevice?.setCapabilitySupportsFanSwing("true")
           }
           else
           {
-           	childDevice?.setCapabilitySupportsAutoSwing("false")
+            log.debug("settingfanswingcapability state false")
+           	childDevice?.setCapabilitySupportsFanSwing("false")
           }
           if(resp.data.HEAT || (resp.data.HEAT).toString() == "[:]"){
           	log.debug("setting HEAT capability state true")
@@ -1040,10 +1049,12 @@ private parseCapabilitiesResponse(resp,childDevice) {
               def heatfanmodelist = resp.data.HEAT.fanSpeeds
               if(resp.data.HEAT.swings || (resp.data.HEAT.swings).toString() == "[:]")
               {
+                log.debug("settingheatswingcapability state true")
               	childDevice?.setCapabilitySupportsHeatSwing("true")
               }
               else
               {
+                log.debug("settingheatswingcapability state false")
               	childDevice?.setCapabilitySupportsHeatSwing("false")
               }
               if(heatfanmodelist.find { it == 'AUTO' }){
@@ -1203,11 +1214,20 @@ private removeChildDevices(delete) {
     catch (e) { log.error "There was an error (${e}) when trying to delete the child device" }
 }
 
-def parseCapabilityData(Map result){
+def parseCapabilityData(Map results){
+  log.debug "in parseCapabilityData"
+  def result
   results.each { name, value ->
-    return value
+    
+    if (name == "value")
+    {
+    log.debug "Map Name Returned, ${name} and Value is ${value}"
+    result = value.toString()
+    log.debug "Result is ${result}"
+    //return result
+    }
   }
-  //return value
+  return result
 }
 
 //Device Commands Below Here
@@ -1229,7 +1249,7 @@ def autoCommand(childDevice){
     def jsonbody
    	if (capabilitySupportsAutoSwing == "true")
     {
-        jsonbody = new groovy.json.JsonOutput().toJson([setting:[mode:"AUTO", power:"ON", swings:"OFF", type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+        jsonbody = new groovy.json.JsonOutput().toJson([setting:[mode:"AUTO", power:"ON", swing:"OFF", type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
     } 
     else
     {
@@ -1294,19 +1314,19 @@ def dryCommand(childDevice){
   def capabilitySupportsDrySwing = parseCapabilityData(childDevice.getCapabilitySupportsDrySwing())
   def capabilitysupported = capabilitySupportsDry
   if (capabilitysupported == "true"){
-  def terminationmode = settings.manualmode
-  log.debug "Executing 'sendCommand.dryCommand' on device ${childDevice.device.name}"
-  def jsonbody
+  	def terminationmode = settings.manualmode
+  	log.debug "Executing 'sendCommand.dryCommand' on device ${childDevice.device.name}"
+  	def jsonbody
       	if (capabilitySupportsDrySwing == "true")
         {
-			jsonbody = new groovy.json.JsonOutput().toJson([setting:[mode:"DRY", power:"ON", swings:"OFF", type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+			jsonbody = new groovy.json.JsonOutput().toJson([setting:[mode:"DRY", power:"ON", swing:"OFF", type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
         } 
         else
         {
         	jsonbody = new groovy.json.JsonOutput().toJson([setting:[mode:"DRY", power:"ON", type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
         }
-  sendCommand("temperature",childDevice,[deviceId,jsonbody])
-  statusCommand(childDevice)
+  	sendCommand("temperature",childDevice,[deviceId,jsonbody])
+  	statusCommand(childDevice)
   } else {
     log.debug("Sorry Dry Capability not supported on device ${childDevice.device.name}")
   }
@@ -1326,7 +1346,7 @@ def fanAuto(childDevice){
       def jsonbody
       	if (capabilitySupportsFanSwing == "true")
         {
-			jsonbody = new groovy.json.JsonOutput().toJson([setting:[mode:"FAN", power:"ON", swings:"OFF", type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
+			jsonbody = new groovy.json.JsonOutput().toJson([setting:[mode:"FAN", power:"ON", swing:"OFF", type:"AIR_CONDITIONING"], termination:[type:terminationmode]])
         } 
         else
         {
