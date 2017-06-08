@@ -12,6 +12,7 @@
  *  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
  *  for the specific language governing permissions and limitations under the License.
  *
+ * 08/06/2017 v2.4 Added Device name to DNI, trying to avaid issue with multiple devices in a single Zone
  * 26/05/2017 v2.3 removed erronous jsonbody statements in the coolCommand Function.
  * 26/05/2017 v2.2 Corrected bug with parseCapability function as this was returning the map instead of the value, this would account for lots of strange behaviour.
  * 25/05/2017 v2.1 Added support for Air Condiioners which have a mandatory swing field for all Commands, corrected prevois bugs in v2.0, thanks again to @Jnick
@@ -308,17 +309,17 @@ def initialize() {
             if (deviceType == "HOT_WATER")
             {
               log.debug("Creating Hot Water Device ${deviceName}")
-              createChildDevice("Tado Hot Water Control", deviceId + "|" + deviceType + "|" + state.accessToken, "${deviceName}", deviceName)
+              createChildDevice("Tado Hot Water Control", deviceId + "|" + deviceType + "|" + state.accessToken + "|" + devicename, "${deviceName}", deviceName)
             }
             if (deviceType == "HEATING")
             {
               log.debug("Creating Heating Device ${deviceName}")
-              createChildDevice("Tado Heating Thermostat", deviceId + "|" + deviceType + "|" + state.accessToken, "${deviceName}", deviceName)
+              createChildDevice("Tado Heating Thermostat", deviceId + "|" + deviceType + "|" + state.accessToken + "|" + devicename, "${deviceName}", deviceName)
             }
             if (deviceType == "AIR_CONDITIONING")
             {
               log.debug("Creating Air Conditioning Device ${deviceName}")
-              createChildDevice("Tado Cooling Thermostat", deviceId + "|" + deviceType + "|" + state.accessToken, "${deviceName}", deviceName)
+              createChildDevice("Tado Cooling Thermostat", deviceId + "|" + deviceType + "|" + state.accessToken + "|" + devicename, "${deviceName}", deviceName)
             }
  			} catch (Exception e) 
             {
@@ -1016,17 +1017,16 @@ private parseCapabilitiesResponse(resp,childDevice) {
           	log.debug("setting DRY capability state false")
           	childDevice?.setCapabilitySupportsDry("false")
           }
-          if(resp.data.DRY.swings || (resp.data.DRY.swings).toString() == "[:]")
+		  if(resp.data.DRY.swings || (resp.data.DRY.swings).toString() == "[:]")
           {
-          	log.debug("settingdryswingcapability state true")
+            log.debug("settingdryswingcapability state true")
          	childDevice?.setCapabilitySupportsDrySwing("true")
           }
           else
           {
-            log.debug("settingdryswingcapability state false")
+          	log.debug("settingdryswingcapability state false")
            	childDevice?.setCapabilitySupportsDrySwing("false")
           }
-          
           if(resp.data.FAN || (resp.data.FAN).toString() == "[:]"){
           	log.debug("setting FAN capability state true")
           	childDevice?.setCapabilitySupportsFan("true")
