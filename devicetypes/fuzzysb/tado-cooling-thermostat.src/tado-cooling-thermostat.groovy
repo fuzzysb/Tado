@@ -13,6 +13,7 @@
  *	Tado AC Thermostat
  *
  *	Author: Stuart Buchanan, Based on original work by Ian M with thanks. also source for icons was from @tonesto7's excellent Nest Manager.
+ *  Date: 2018-02-06 v3.5 Fixed Commands for those with Heat Cool that do not support Fan Modes
  *  Date: 2017-05-25 v3.4 Added extra logging for Air Condiioners and corrected some of the get/set functions which had some typo's
  *  Date: 2017-05-25 v3.3 Added support for Air Condiioners which have a mandatory swing field for all Commands and corrected issues with v3.2
  *  Date: 2017-05-20 v3.2 Added support for Air Condiioners which have a mandatory swing field in the heating & cool Commands, thanks again to @Jnick
@@ -307,6 +308,28 @@ def getCapabilitySupportsHeat() {
   def map = null
   map = [name: "capabilitySupportsHeat", value: state.supportsHeat]
   return map
+}
+
+def getCapabilitySupportsCoolFanSpeed() {
+  def map = null
+  map = [name: "CoolFanSpeed", value: state.CoolFanSpeed]
+  return map
+}
+
+def setCapabilitySupportsCoolFanSpeed(value){
+  state.CoolFanSpeed = value
+  log.debug("set state.CoolFanSpeed to : " + state.CoolFanSpeed)
+}
+
+def getCapabilitySupportsHeatFanSpeed() {
+  def map = null
+  map = [name: "HeatFanSpeed", value: state.HeatFanSpeed]
+  return map
+}
+
+def setCapabilitySupportsHeatFanSpeed(value){
+  state.HeatFanSpeed = value
+  log.debug("set state.HeatFanSpeed to : " + state.HeatFanSpeed)
 }
 
 def setCapabilitySupportsHeatAutoFanSpeed(value){
