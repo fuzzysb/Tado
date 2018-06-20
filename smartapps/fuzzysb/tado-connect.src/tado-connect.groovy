@@ -12,6 +12,7 @@
  *  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
  *  for the specific language governing permissions and limitations under the License.
  *
+ * 07/02/2018 v2.7 Added some new try catch blocks around parse capability as there were exceptioons after v2.1 occuring for ait conditioners, this now works correctly
  * 06/02/2018 v2.6 Fixed Commands for those with Heat Cool that do not support Fan Modes
  * 08/06/2017 v2.5 Amended bug where Hot water type was set to WATER, Instead or HOT_WATER, with thanks to @invisiblemountain
  * 08/06/2017 v2.4 Added Device name to DNI, trying to avaid issue with multiple devices in a single Zone
@@ -963,136 +964,170 @@ private parseCapabilitiesResponse(resp,childDevice) {
         log.debug("Tado Type is ${resp.data.type}")
         if(resp.data.type == "AIR_CONDITIONING")
         {
-          if(resp.data.AUTO || (resp.data.AUTO).toString() == "[:]"){
-          	log.debug("settingautocapability state true")
-          	childDevice?.setCapabilitySupportsAuto("true")
-          } else {
-          	log.debug("settingautocapability state false")
-          	childDevice?.setCapabilitySupportsAuto("false")
-          }
-          if(resp.data.AUTO.swings || (resp.data.AUTO.swings).toString() == "[:]")
+          try
           {
-            log.debug("settingautoswingcapability state true")
-         	childDevice?.setCapabilitySupportsAutoSwing("true")
+            if(resp.data.AUTO || (resp.data.AUTO).toString() == "[:]"){
+              log.debug("settingautocapability state true")
+              childDevice?.setCapabilitySupportsAuto("true")
+            } else {
+              log.debug("settingautocapability state false")
+              childDevice?.setCapabilitySupportsAuto("false")
+            }
+            if(resp.data.AUTO.swings || (resp.data.AUTO.swings).toString() == "[:]")
+            {
+              log.debug("settingautoswingcapability state true")
+            childDevice?.setCapabilitySupportsAutoSwing("true")
+            }
+            else
+            {
+              log.debug("settingautoswingcapability state false")
+              childDevice?.setCapabilitySupportsAutoSwing("false")
+            }
           }
-          else
+          catch(Exception e)
           {
-          	log.debug("settingautoswingcapability state false")
-           	childDevice?.setCapabilitySupportsAutoSwing("false")
+            log.debug("___exception parsing Auto Capabiity: " + e)
           }
-          if(resp.data.COOL || (resp.data.COOL).toString() == "[:]"){
-          	log.debug("setting COOL capability state true")
-          	childDevice?.setCapabilitySupportsCool("true")
-              def coolfanmodelist = resp.data.COOL.fanSpeeds
-              if(resp.data.COOL.swings || (resp.data.COOL.swings).toString() == "[:]")
-              {
-              	log.debug("settingcoolswingcapability state true")
-              	childDevice?.setCapabilitySupportsCoolSwing("true")
-              }
-              else
-              {
-                log.debug("settingcoolswingcapability state false")
-              	childDevice?.setCapabilitySupportsCoolSwing("false")
-              }
-              if(resp.data.COOL.fanSpeeds || (resp.data.COOL.fanSpeeds).toString() == "[:]")
-              {
-              	childDevice?.setCapabilitySupportsCoolFanSpeed("true")
-              }
-              else
-              {
-              	childDevice?.setCapabilitySupportsCoolFanSpeed("false")
-              }
-              if(coolfanmodelist.find { it == 'AUTO' }){
-              	log.debug("setting COOL Auto Fan Speed capability state true")
-              	childDevice?.setCapabilitySupportsCoolAutoFanSpeed("true")
-              } else {
-              	log.debug("setting COOL Auto Fan Speed capability state false")
-              	childDevice?.setCapabilitySupportsCoolAutoFanSpeed("false")
-              }
-              if (state.tempunit == "C"){
-              	childDevice?.setCapabilityMaxCoolTemp(resp.data.COOL.temperatures.celsius.max)
-                childDevice?.setCapabilityMinCoolTemp(resp.data.COOL.temperatures.celsius.min)
-              } else if (state.tempunit == "F") {
-              	childDevice?.setCapabilityMaxCoolTemp(resp.data.COOL.temperatures.fahrenheit.max)
-                childDevice?.setCapabilityMinCoolTemp(resp.data.COOL.temperatures.fahrenheit.min)
-             	}
-          } else {
-          	log.debug("setting COOL capability state false")
-          	childDevice?.setCapabilitySupportsCool("false")
-          }
-          if(resp.data.DRY || (resp.data.DRY).toString() == "[:]"){
-          	log.debug("setting DRY capability state true")
-          	childDevice?.setCapabilitySupportsDry("true")
-          } else {
-          	log.debug("setting DRY capability state false")
-          	childDevice?.setCapabilitySupportsDry("false")
-          }
-		  if(resp.data.DRY.swings || (resp.data.DRY.swings).toString() == "[:]")
+          try
           {
-            log.debug("settingdryswingcapability state true")
-         	childDevice?.setCapabilitySupportsDrySwing("true")
+              if(resp.data.COOL || (resp.data.COOL).toString() == "[:]"){
+              log.debug("setting COOL capability state true")
+              childDevice?.setCapabilitySupportsCool("true")
+                def coolfanmodelist = resp.data.COOL.fanSpeeds
+                if(resp.data.COOL.swings || (resp.data.COOL.swings).toString() == "[:]")
+                {
+                  log.debug("settingcoolswingcapability state true")
+                  childDevice?.setCapabilitySupportsCoolSwing("true")
+                }
+                else
+                {
+                  log.debug("settingcoolswingcapability state false")
+                  childDevice?.setCapabilitySupportsCoolSwing("false")
+                }
+                if(resp.data.COOL.fanSpeeds || (resp.data.COOL.fanSpeeds).toString() == "[:]")
+                {
+                  childDevice?.setCapabilitySupportsCoolFanSpeed("true")
+                }
+                else
+                {
+                  childDevice?.setCapabilitySupportsCoolFanSpeed("false")
+                }
+                if(coolfanmodelist.find { it == 'AUTO' }){
+                  log.debug("setting COOL Auto Fan Speed capability state true")
+                  childDevice?.setCapabilitySupportsCoolAutoFanSpeed("true")
+                } else {
+                  log.debug("setting COOL Auto Fan Speed capability state false")
+                  childDevice?.setCapabilitySupportsCoolAutoFanSpeed("false")
+                }
+                if (state.tempunit == "C"){
+                  childDevice?.setCapabilityMaxCoolTemp(resp.data.COOL.temperatures.celsius.max)
+                  childDevice?.setCapabilityMinCoolTemp(resp.data.COOL.temperatures.celsius.min)
+                } else if (state.tempunit == "F") {
+                  childDevice?.setCapabilityMaxCoolTemp(resp.data.COOL.temperatures.fahrenheit.max)
+                  childDevice?.setCapabilityMinCoolTemp(resp.data.COOL.temperatures.fahrenheit.min)
+                }
+            } else {
+              log.debug("setting COOL capability state false")
+              childDevice?.setCapabilitySupportsCool("false")
+            }
           }
-          else
+          catch(Exception e)
           {
-          	log.debug("settingdryswingcapability state false")
-           	childDevice?.setCapabilitySupportsDrySwing("false")
+            log.debug("___exception parsing Cool Capabiity: " + e)
           }
-          if(resp.data.FAN || (resp.data.FAN).toString() == "[:]"){
-          	log.debug("setting FAN capability state true")
-          	childDevice?.setCapabilitySupportsFan("true")
-          } else {
-          	log.debug("setting FAN capability state false")
-          	childDevice?.setCapabilitySupportsFan("false")
-          }
-          if(resp.data.FAN.swings || (resp.data.FAN.swings).toString() == "[:]")
+          try
           {
-            log.debug("settingfanswingcapability state true")
-         	childDevice?.setCapabilitySupportsFanSwing("true")
+            if(resp.data.DRY || (resp.data.DRY).toString() == "[:]"){
+              log.debug("setting DRY capability state true")
+              childDevice?.setCapabilitySupportsDry("true")
+            } else {
+              log.debug("setting DRY capability state false")
+              childDevice?.setCapabilitySupportsDry("false")
+            }
+            if(resp.data.DRY.swings || (resp.data.DRY.swings).toString() == "[:]")
+            {
+              log.debug("settingdryswingcapability state true")
+            childDevice?.setCapabilitySupportsDrySwing("true")
+            }
+            else
+            {
+              log.debug("settingdryswingcapability state false")
+              childDevice?.setCapabilitySupportsDrySwing("false")
+            }
           }
-          else
+          catch(Exception e)
           {
-            log.debug("settingfanswingcapability state false")
-           	childDevice?.setCapabilitySupportsFanSwing("false")
+            log.debug("___exception parsing Dry Capabiity: " + e)
           }
-          if(resp.data.HEAT || (resp.data.HEAT).toString() == "[:]"){
-          	log.debug("setting HEAT capability state true")
-          	childDevice?.setCapabilitySupportsHeat("true")
-              def heatfanmodelist = resp.data.HEAT.fanSpeeds
-              if(resp.data.HEAT.swings || (resp.data.HEAT.swings).toString() == "[:]")
-              {
-                log.debug("settingheatswingcapability state true")
-              	childDevice?.setCapabilitySupportsHeatSwing("true")
-              }
-              else
-              {
-                log.debug("settingheatswingcapability state false")
-              	childDevice?.setCapabilitySupportsHeatSwing("false")
-              }
-              if(resp.data.HEAT.fanSpeeds || (resp.data.HEAT.fanSpeeds).toString() == "[:]")
-              {
-              	childDevice?.setCapabilitySupportsHeatFanSpeed("true")
-              }
-              else
-              {
-              	childDevice?.setCapabilitySupportsHeatFanSpeed("false")
-              }
-              if(heatfanmodelist.find { it == 'AUTO' }){
-              	log.debug("setting HEAT Auto Fan Speed capability state true")
-              	childDevice?.setCapabilitySupportsHeatAutoFanSpeed("true")
-              } else {
-              	log.debug("setting HEAT Auto Fan Speed capability state false")
-              	childDevice?.setCapabilitySupportsHeatAutoFanSpeed("false")
-              }
-              if (state.tempunit == "C"){
-              	childDevice?.setCapabilityMaxHeatTemp(resp.data.HEAT.temperatures.celsius.max)
-                childDevice?.setCapabilityMinHeatTemp(resp.data.HEAT.temperatures.celsius.min)
-              } else if (state.tempunit == "F") {
-              	childDevice?.setCapabilityMaxHeatTemp(resp.data.HEAT.temperatures.fahrenheit.max)
-                childDevice?.setCapabilityMinHeatTemp(resp.data.HEAT.temperatures.fahrenheit.min)
-             	}
-          } else {
-          	log.debug("setting HEAT capability state false")
-          	childDevice?.setCapabilitySupportsHeat("false")
+          try
+          {
+            if(resp.data.FAN || (resp.data.FAN).toString() == "[:]"){
+              log.debug("setting FAN capability state true")
+              childDevice?.setCapabilitySupportsFan("true")
+            } else {
+              log.debug("setting FAN capability state false")
+              childDevice?.setCapabilitySupportsFan("false")
+            }
+            if(resp.data.FAN.swings || (resp.data.FAN.swings).toString() == "[:]")
+            {
+              log.debug("settingfanswingcapability state true")
+            childDevice?.setCapabilitySupportsFanSwing("true")
+            }
+            else
+            {
+              log.debug("settingfanswingcapability state false")
+              childDevice?.setCapabilitySupportsFanSwing("false")
+            }
+          }
+          catch(Exception e)
+          {
+            log.debug("___exception parsing Fan Capabiity: " + e)
+          }
+          try
+          {
+            if(resp.data.HEAT || (resp.data.HEAT).toString() == "[:]"){
+              log.debug("setting HEAT capability state true")
+              childDevice?.setCapabilitySupportsHeat("true")
+                def heatfanmodelist = resp.data.HEAT.fanSpeeds
+                if(resp.data.HEAT.swings || (resp.data.HEAT.swings).toString() == "[:]")
+                {
+                  log.debug("settingheatswingcapability state true")
+                  childDevice?.setCapabilitySupportsHeatSwing("true")
+                }
+                else
+                {
+                  log.debug("settingheatswingcapability state false")
+                  childDevice?.setCapabilitySupportsHeatSwing("false")
+                }
+                if(resp.data.HEAT.fanSpeeds || (resp.data.HEAT.fanSpeeds).toString() == "[:]")
+                {
+                  childDevice?.setCapabilitySupportsHeatFanSpeed("true")
+                }
+                else
+                {
+                  childDevice?.setCapabilitySupportsHeatFanSpeed("false")
+                }
+                if(heatfanmodelist.find { it == 'AUTO' }){
+                  log.debug("setting HEAT Auto Fan Speed capability state true")
+                  childDevice?.setCapabilitySupportsHeatAutoFanSpeed("true")
+                } else {
+                  log.debug("setting HEAT Auto Fan Speed capability state false")
+                  childDevice?.setCapabilitySupportsHeatAutoFanSpeed("false")
+                }
+                if (state.tempunit == "C"){
+                  childDevice?.setCapabilityMaxHeatTemp(resp.data.HEAT.temperatures.celsius.max)
+                  childDevice?.setCapabilityMinHeatTemp(resp.data.HEAT.temperatures.celsius.min)
+                } else if (state.tempunit == "F") {
+                  childDevice?.setCapabilityMaxHeatTemp(resp.data.HEAT.temperatures.fahrenheit.max)
+                  childDevice?.setCapabilityMinHeatTemp(resp.data.HEAT.temperatures.fahrenheit.min)
+                }
+            } else {
+              log.debug("setting HEAT capability state false")
+              childDevice?.setCapabilitySupportsHeat("false")
+            }
+          }catch(Exception e)
+          {
+            log.debug("___exception parsing Heat Capabiity: " + e)
           }
         }
         if(resp.data.type == "HEATING")
