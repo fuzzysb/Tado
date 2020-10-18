@@ -762,10 +762,7 @@ private parseResponse(resp,childDevice) {
     def temperatureUnit = state.tempunit
     log.debug("Temperature Unit is ${temperatureUnit}")
     def humidityUnit = "%"
-    def ACMode
-    def ACFanSpeed
     def thermostatSetpoint
-    def tOperatingState
     if(resp.status == 200) {
         log.debug("Executing parseResponse.successTrue")
         def temperature
@@ -791,9 +788,6 @@ private parseResponse(resp,childDevice) {
         childDevice?.sendEvent(name: 'tadoMode', value: autoOperation)
 
 		if (resp.data.setting.power == "ON"){
-			childDevice?.sendEvent(name: 'thermostatMode', value: "heat")
-			childDevice?.sendEvent(name: 'thermostatOperatingState', value: "heating")
-			log.debug("Send thermostatMode Event Fired")
 			if (temperatureUnit == "C") {
 				thermostatSetpoint = resp.data.setting.temperature.celsius
 			}
@@ -801,6 +795,16 @@ private parseResponse(resp,childDevice) {
 				thermostatSetpoint = resp.data.setting.temperature.fahrenheit
 			}
 			log.debug("Read thermostatSetpoint: " + thermostatSetpoint)
+
+			childDevice?.sendEvent(name: 'thermostatMode', value: "heat")
+			if (temperature < thermostatSetpoint) {
+				log.debug("Heat mode; setpoint not reached")
+				childDevice?.sendEvent(name: 'thermostatOperatingState', value: "heating")
+			} else {
+				log.debug("Heat mode; setpoint reached")
+				childDevice?.sendEvent(name: 'thermostatOperatingState', value: "idle")
+			}
+			log.debug("Send thermostatMode Event Fired")
 		} else if(resp.data.setting.power == "OFF"){
 			thermostatSetpoint = "--"
 			childDevice?.sendEvent(name: 'thermostatMode', value: "off")
@@ -836,10 +840,7 @@ private parseResponse(resp,childDevice) {
     def temperatureUnit = state.tempunit
     log.debug("Temperature Unit is ${temperatureUnit}")
     def humidityUnit = "%"
-    def ACMode
-    def ACFanSpeed
     def thermostatSetpoint
-    def tOperatingState
     if(resp.status == 200) {
     log.debug("Executing parseResponse.successTrue")
     def temperature
