@@ -12,11 +12,7 @@
  *  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
  *  for the specific language governing permissions and limitations under the License.
  *
-<<<<<<< HEAD
  * 07/02/2018 v2.7 Added some new try catch blocks around parse capability as there were exceptioons after v2.1 occuring for ait conditioners, this now works correctly
-=======
- * 07/02/2018 v2.7 Added some new try catch blocks around parse capability as there were exceptioons after v2.1 occuring for air conditioners, this now works correctly
->>>>>>> origin/master
  * 06/02/2018 v2.6 Fixed Commands for those with Heat Cool that do not support Fan Modes
  * 08/06/2017 v2.5 Amended bug where Hot water type was set to WATER, Instead or HOT_WATER, with thanks to @invisiblemountain
  * 08/06/2017 v2.4 Added Device name to DNI, trying to avaid issue with multiple devices in a single Zone
